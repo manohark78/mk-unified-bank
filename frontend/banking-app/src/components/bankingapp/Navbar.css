@@ -1,0 +1,56 @@
+/* Navbar.css */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #5f6dfb 0%, #7b61ff 50%, #8e57ff 100%);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.nav-brand { cursor: pointer; }
+.brand-mark {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.3px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.nav-links a:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.nav-actions { display: flex; align-items: center; }
+.btn-logout {
+  background: #ffffff;
+  color: #4b4b4b;
+  border: 0;
+  padding: 8px 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .navbar { flex-wrap: wrap; row-gap: 10px; }
+  .nav-links { flex-basis: 100%; justify-content: center; }
+  .nav-actions { margin-left: auto; }
+}

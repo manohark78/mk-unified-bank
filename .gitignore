@@ -1,0 +1,13 @@
+# Root-level ignore
+
+### Backend ###
+backend/bankingapp/target/
+backend/bankingapp/.idea/
+
+### Frontend ###
+frontend/banking-app/node_modules/
+
+### Common ###
+.idea/
+.vscode/
+*.log
