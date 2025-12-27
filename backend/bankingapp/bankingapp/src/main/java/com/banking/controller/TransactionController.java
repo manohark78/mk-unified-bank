@@ -26,12 +26,22 @@ public class TransactionController {
     @PostMapping
     public ResponseEntity<?> transfer(@RequestBody TransferRequest req, Authentication auth){
 
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
         Account from = accountRepository.findByAccountNumber(req.fromAccountNumber())
-                .filter(a -> a.getUser().getEmail().equals(auth.getName()))
-                .orElseThrow(() -> new AccessDeniedException("Forbidden: not your account"));
+                .orElseThrow(() -> new ResourceNotFoundException("Sender not found"));
+
+        if (!isAdmin) {
+            if (from.getUser() == null || from.getUser().getEmail() == null ||
+                    !from.getUser().getEmail().equals(auth.getName())) {
+                throw new AccessDeniedException("Forbidden: not your account");
+            }
+        }
 
         Account to = accountRepository.findByAccountNumber(req.toAccountNumber())
                 .orElseThrow(() -> new ResourceNotFoundException("Destination not found"));
+
         TransactionDto tx = transactionService.transfer(
                 req.fromAccountNumber(), req.toAccountNumber(), req.amount(), req.description()
         );

@@ -61,7 +61,6 @@ public class AccountServiceImpl implements AccountService {
                 : "2000";
         String defaultRaw = first3 + year; // e.g., RAH2000
 
-        // 2) Create or reuse User by email; set phone for phone login
         User user = userRepository.findByEmail(accountDto.email()).orElse(null);
         if (user == null) {
             user = new User();
@@ -77,7 +76,6 @@ public class AccountServiceImpl implements AccountService {
 
             user = userRepository.save(user);
         } else {
-            // if a user exists without phone, set it (optional)
             if (user.getPhoneNumber() == null && accountDto.phoneNumber() != null) {
                 user.setPhoneNumber(accountDto.phoneNumber());
                 userRepository.save(user);

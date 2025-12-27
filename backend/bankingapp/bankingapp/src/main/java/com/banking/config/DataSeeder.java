@@ -33,7 +33,6 @@ public class DataSeeder implements CommandLineRunner {
             admin.getRoles().add(adminRole);
             admin.getRoles().add(userRole);
             User saved = userRepository.save(admin);
-            System.out.println("✅ Admin user created: admin@bank.local / Admin@123");
             return saved;
         });
     }
