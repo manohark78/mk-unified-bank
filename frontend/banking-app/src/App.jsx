@@ -7,6 +7,8 @@ import { isAuthenticated } from './Authentication/auth';
 import AccountDetails from './components/bankingapp/AccountDetails';
 import TransferForm from './components/bankingapp/TransferForm';
 import ChangePassword from './components/bankingapp/ChangePassword';
+import AdminDashboard from "./components/bankingapp/AdminDashboard";
+
 
 const mustChangePassword = () => localStorage.getItem('passwordChangeRequired') === 'true';
 
@@ -73,6 +75,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <>
+              <Navbar />
+              <AdminDashboard />
+            </>
+          </ProtectedRoute>
+        }
+        />
+
       </Routes>
     </Router>
   );

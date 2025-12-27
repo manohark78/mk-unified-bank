@@ -1,6 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { isAdmin } from '../../Authentication/auth';
-import './Navbar.css';
+import { NavLink, useNavigate } from "react-router-dom";
+import { isAdmin } from "../../Authentication/auth";
+import "./Navbar.css";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -8,25 +8,23 @@ export default function Navbar() {
 
   const logout = () => {
     localStorage.clear();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
-    <nav className="navbar">
-      <div className="nav-brand" onClick={() => navigate('/')}>
-        <span className="brand-mark">MyBank</span>
+    <nav className="mk-navbar">
+      <div className="mk-brand" onClick={() => navigate(admin ? "/admin" : "/")}>
+        M.K. Unified Bank
       </div>
 
-      <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/transfer">Transfer</Link></li>
-        <li><Link to="/history">History</Link></li>
-        {admin && <li><Link to="/add-account">Create Account</Link></li>}
-      </ul>
-
-      <div className="nav-actions">
-        <button className="btn-logout" onClick={logout}>Logout</button>
+      <div className="mk-navlinks">
+        <NavLink to={admin ? "/admin" : "/"} className="mk-link">Home</NavLink>
+        <NavLink to="/transfer" className="mk-link">Transfer</NavLink>
+        <NavLink to="/history" className="mk-link">History</NavLink>
+        {admin && <NavLink to="/add-account" className="mk-link">Create Account</NavLink>}
       </div>
+
+      <button className="mk-logout" onClick={logout}>Logout</button>
     </nav>
   );
 }

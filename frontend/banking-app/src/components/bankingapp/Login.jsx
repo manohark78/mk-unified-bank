@@ -67,7 +67,7 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="admin@bank.local"
+              placeholder="xyz@gmail.com"
               disabled={loading}
             />
           </div>
@@ -92,11 +92,11 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="test-credentials">
+        {/* <div className="test-credentials">
           <p>Test Credentials:</p>
           <p>Email: admin@bank.local</p>
           <p>Password: Admin@123</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
