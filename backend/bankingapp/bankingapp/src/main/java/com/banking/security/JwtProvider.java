@@ -2,7 +2,6 @@ package com.banking.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,10 +16,10 @@ import java.util.function.Function;
 @Component
 public class JwtProvider {
 
-    @Value("${jwt.secret:mySecretKeyForJWTTokenGenerationWhichShouldBeLongEnough1234567890}")
+    @Value("${jwt.secret}")
     private String SECRET_KEY;
 
-    @Value("${jwt.expiration:86400000}")
+    @Value("${jwt.expiration}")
     private Long JWT_EXPIRATION;
 
     private SecretKey getSigningKey() {
