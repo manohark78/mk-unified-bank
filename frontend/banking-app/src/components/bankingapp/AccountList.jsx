@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getAuthHeaders, isAdmin } from '../../Authentication/auth';
 import { useNavigate } from 'react-router-dom';
 import './AccountList.css';
+// import { apiClient } from "./apiService/apiClient";
 
 const AccountList = () => {
   const [accounts, setAccounts] = useState([]);
@@ -16,8 +17,8 @@ const AccountList = () => {
     const load = async () => {
       try {
         const url = admin
-          ? 'http://localhost:8080/api/accounts'       // admin: all
-          : 'http://localhost:8080/api/accounts/my';   // user: own only
+          ? 'http://localhost:8081/api/accounts'       // admin: all
+          : 'http://localhost:8081/api/accounts/my';   // user: own only
         const res = await fetch(url, { headers: getAuthHeaders() });
 
         if (res.status === 401) {
@@ -42,6 +43,30 @@ const AccountList = () => {
     return () => { cancelled = true; };
   }, [admin]); // depend on admin because it changes the URL
 
+  //   const load = async () => {
+  // try {
+  //   const endpoint = admin ? "/api/accounts" : "/api/accounts/my";
+
+  //   const res = await apiClient.get(endpoint, {
+  //     headers: getAuthHeaders(),
+  //   });
+
+  //   setAccounts(res.data || []);
+  // } catch (err) {
+  //   if (err?.response?.status === 401) {
+  //     localStorage.clear();
+  //     window.location.href = "/login";
+  //     return;
+  //   }
+  //   if (!cancelled) setMsg("Failed to load accounts");
+  // } finally {
+  //   if (!cancelled) setLoading(false);
+  // }
+  //   };
+  //       load();
+  //   return () => { cancelled = true; };
+  // }, [admin]);
+    
   const viewDetails = (accountId) => navigate(`/account/${accountId}`);
 
   if (loading) return <div className="loading">Loading accounts...</div>;

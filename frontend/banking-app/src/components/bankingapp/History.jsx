@@ -1,31 +1,61 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { isAdmin, getAuthHeaders } from '../../Authentication/auth';
 
 export default function History() {
   const loc = useLocation();
   const accountId = loc.state?.accountId;
+
+  const admin = isAdmin();
+
   const [items, setItems] = useState([]);
   const [msg, setMsg] = useState('');
 
   useEffect(() => {
+    let cancelled = false;
+
     const url = accountId
-      ? `http://localhost:8080/api/transactions/account/${accountId}?page=0&size=20`
-      : `http://localhost:8080/api/transactions/my?page=0&size=20`;
+      ? `http://localhost:8081/api/transactions/account/${accountId}?page=0&size=20`
+      : admin
+        ? `http://localhost:8081/api/transactions/all?page=0&size=20`
+        : `http://localhost:8081/api/transactions/my?page=0&size=20`;
+
     (async () => {
       try {
-        const res = await fetch(url, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }});
-        if (!res.ok) { setMsg('Failed to load history'); return; }
+        const res = await fetch(url, { headers: getAuthHeaders() });
+
+        if (res.status === 401) {
+          localStorage.clear();
+          window.location.href = '/login';
+          return;
+        }
+
+        if (!res.ok) {
+          if (!cancelled) setMsg('Failed to load history');
+          return;
+        }
+
         const data = await res.json();
-        const content = data.content || data;
-        setItems(content || []);
-      } catch { setMsg('Network error'); }
+        const content = data?.content ?? data;
+        if (!cancelled) setItems(content || []);
+      } catch {
+        if (!cancelled) setMsg('Network error');
+      }
     })();
-  }, [accountId]);
+
+    return () => { cancelled = true; };
+  }, [accountId, admin]);
 
   return (
     <div className="page">
-      <h2>Transaction History</h2>
+      <h2>{admin ? 'All Transaction History' : 'Transaction History'}</h2>
+
       {msg && <p>{msg}</p>}
+
+      {!msg && items.length === 0 && (
+        <p>No transactions found.</p>
+      )}
+
       <ul>
         {items.map(tx => (
           <li key={tx.id}>

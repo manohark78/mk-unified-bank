@@ -25,8 +25,8 @@ export default function TransferForm() {
     (async () => {
       try {
         const url = admin
-          ? 'http://localhost:8080/api/accounts'
-          : 'http://localhost:8080/api/accounts/my';
+          ? 'http://localhost:8081/api/accounts'
+          : 'http://localhost:8081/api/accounts/my';
 
         const res = await fetch(url, { headers: getAuthHeaders() });
 
@@ -62,7 +62,7 @@ export default function TransferForm() {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:8080/api/transfers', {
+      const res = await fetch('http://localhost:8081/api/transfers', {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify({

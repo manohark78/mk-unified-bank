@@ -54,7 +54,7 @@ export default function AddAccount() {
         nomineePhone: form.nomineePhone || null
       };
 
-      const res = await fetch('http://localhost:8080/api/accounts', {
+      const res = await fetch('http://localhost:8081/api/accounts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

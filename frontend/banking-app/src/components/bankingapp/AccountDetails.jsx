@@ -21,8 +21,8 @@ const AccountDetails = () => {
       setError('');
       try {
         const url = admin
-          ? `http://localhost:8080/api/accounts/${id}`
-          : `http://localhost:8080/api/accounts/owned/${id}`;
+          ? `http://localhost:8081/api/accounts/${id}`
+          : `http://localhost:8081/api/accounts/owned/${id}`;
         const res = await fetch(url, { headers: getAuthHeaders() });
 
         if (res.status === 401) {
@@ -84,7 +84,7 @@ const AccountDetails = () => {
     const path = (admin ? endpointsAdmin : endpointsUser)[modalType];
 
     try {
-      const res = await fetch(`http://localhost:8080${path}`, {
+      const res = await fetch(`http://localhost:8081${path}`, {
         method: 'PUT',
         headers: getAuthHeaders(),
         body: JSON.stringify({ amount: parseFloat(amount) }),
@@ -126,7 +126,7 @@ const AccountDetails = () => {
             onClick={async () => {
               if (!window.confirm('Delete this account?')) return;
               try {
-                const res = await fetch(`http://localhost:8080/api/accounts/${id}`, {
+                const res = await fetch(`http://localhost:8081/api/accounts/${id}`, {
                   method: 'DELETE',
                   headers: getAuthHeaders(),
                 });
